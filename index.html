@@ -28,6 +28,23 @@
     <script src="main.js"></script>
 </head>
 <body>
+
+
+    <div id="dailyModalOverlay" class="daily-modal-overlay">
+    <div class="daily-modal">
+        <button class="daily-close" id="dailyClose">✕</button>
+
+        <img id="dailyModalImage" src="" alt="Prato do dia">
+
+        <div class="daily-modal-info">
+            <span class="daily-badge">Prato do Dia</span>
+            <h3 id="dailyModalTitle"></h3>
+            <p id="dailyModalPromo"></p>
+        </div>
+    </div>
+</div>
+    
+
     <!-- Cabeçalho -->
     <header class="header">
         <div class="container">
@@ -67,6 +84,15 @@
             <span class="cart-badge" id="cartBadge">0</span>
         </button>
     </div>
+
+
+    <div id="dailyBanner" class="daily-banner" style="display:none;">
+    <div class="daily-banner-content">
+        <span class="daily-badge">Prato do Dia</span>
+        <h3 id="dailyTitle"></h3>
+        <p id="dailyPromo"></p>
+    </div>
+</div>
 
     <!-- Main Content -->
     <main class="main" id="mainContent">

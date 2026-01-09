@@ -1,5 +1,16 @@
 // Aplicação Principal - Delivery Gourmet
+document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    initCarousel();
+    initDailyBanner();
+});
 
+document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    initCarousel();
+    initDailyBanner(); // se quiser manter o banner
+    initDailyModal();  // 🔥 modal automático
+});
 // Função para renderizar produtos
 function renderProducts() {
     // Renderizar cada categoria
@@ -321,3 +332,88 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
     initCarousel(); // 🔥 AGORA FUNCIONA
 });
+
+
+
+
+
+
+
+
+
+
+function initDailyBanner() {
+    const now = new Date();
+    const hour = now.getHours();
+    const day = now.getDay(); // 0=Domingo
+
+    // horário permitido
+    if (hour < 9 || hour >= 18) return;
+
+    const dailyMenu = {
+        1: { id: 'ou-01', title: 'Cozidão', promo: 'Hoje tem Cozidão com preço especial!' },
+        2: { id: 'pe-07', title: 'Carne de Sol', promo: 'Carne de sol suculenta hoje!' },
+        3: { id: 'pm-02', title: 'Macarronada', promo: 'Macarronada feita na hora 🍝' },
+        4: { id: 'fj-01', title: 'Feijoada', promo: 'Quinta é dia de feijoada!' },
+        5: { id: 'pe-03', title: 'Frango Grelhado', promo: 'Promoção especial de sexta!' },
+        6: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado com bife acebolado 😋' }
+    };
+
+    const today = dailyMenu[day];
+    if (!today) return;
+
+    const banner = document.getElementById('dailyBanner');
+    document.getElementById('dailyTitle').innerText =
+        `Hoje é ${today.title}`;
+    document.getElementById('dailyPromo').innerText =
+        today.promo;
+
+    banner.style.display = 'block';
+
+    banner.onclick = () => {
+        openProductModal(today.id);
+    };
+}
+
+
+function initDailyModal() {
+    const now = new Date();
+    const hour = now.getHours();
+    const day = now.getDay(); // 0 domingo
+
+    if (hour < 9 || hour >= 18) return;
+
+    const dailyMenu = {
+        1: { id: 'ou-01', title: 'Cozidão', promo: 'Hoje tem Cozidão com preço especial!' },
+        2: { id: 'pe-07', title: 'Carne de Sol', promo: 'Carne de sol suculenta hoje!' },
+        3: { id: 'pm-02', title: 'Macarronada', promo: 'Macarronada fresquinha 🍝' },
+        4: { id: 'fj-01', title: 'Feijoada', promo: 'Quinta é dia de feijoada!' },
+        5: { id: 'pe-03', title: 'Frango Grelhado', promo: 'Promoção especial de sexta!' },
+        6: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado especial 😋' }
+    };
+
+    const today = dailyMenu[day];
+    if (!today) return;
+
+    const product = getProductById(today.id);
+    if (!product) return;
+
+    const overlay = document.getElementById('dailyModalOverlay');
+
+    document.getElementById('dailyModalImage').src = product.image;
+    document.getElementById('dailyModalTitle').innerText = today.title;
+    document.getElementById('dailyModalPromo').innerText = today.promo;
+
+    overlay.style.display = 'flex';
+
+    // fechar
+    document.getElementById('dailyClose').onclick = () => {
+        overlay.style.display = 'none';
+    };
+
+    // clicar no banner
+    overlay.querySelector('.daily-modal').onclick = () => {
+        overlay.style.display = 'none';
+        openProductModal(product.id);
+    };
+}

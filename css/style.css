@@ -815,3 +815,20 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #C41E2A;
 }
+
+
+/* ===== CORREÇÃO BOTÃO ADD NO MOBILE ===== */
+@media (max-width: 767px) {
+    .product-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .product-price {
+        margin-bottom: 6px;
+    }
+
+    .btn-add {
+        width: 100%;
+    }
+}

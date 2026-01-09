@@ -295,7 +295,7 @@ body {
     background-color: var(--primary-red);
     color: var(--pure-white);
     border: none;
-    padding: 8px 15px;
+    padding: 8px 16px;
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -818,16 +818,18 @@ body {
 
 
 
-/* ===== AJUSTE DO BOTÃO ADD NO MOBILE ===== */
+/* ===== CORREÇÃO BOTÃO ADD NO MOBILE ===== */
 @media (max-width: 767px) {
-    .btn-add {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
+    .product-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-        position: static !important;
-        margin-top: 8px;
+    .product-price {
+        margin-bottom: 6px;
+    }
+
+    .btn-add {
         width: 100%;
-        text-align: center;
     }
 }

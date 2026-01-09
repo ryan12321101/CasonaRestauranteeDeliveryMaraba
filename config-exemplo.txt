@@ -1,0 +1,163 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║   📋 ARQUIVO DE CONFIGURAÇÃO - DELIVERY GOURMET                ║
+║                                                                ║
+║   Use este arquivo como referência para personalizar          ║
+║   as informações do seu delivery                              ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+
+═══════════════════════════════════════════════════════════════════
+  1. INFORMAÇÕES BÁSICAS
+═══════════════════════════════════════════════════════════════════
+
+Nome do Delivery: Delivery Gourmet
+Slogan: Comida de Qualidade
+Telefone/WhatsApp: (94) 99151-4909
+Número WhatsApp (formato internacional): 5594991514909
+
+
+═══════════════════════════════════════════════════════════════════
+  2. PAGAMENTO PIX
+═══════════════════════════════════════════════════════════════════
+
+Tipo de Chave: CPF
+Chave Pix: 084.375.262-99
+Nome do Titular: [Seu Nome]
+Banco: [Nome do Banco]
+
+
+═══════════════════════════════════════════════════════════════════
+  3. HORÁRIO DE FUNCIONAMENTO
+═══════════════════════════════════════════════════════════════════
+
+Segunda-feira:    09:00 - 18:00  ✅
+Terça-feira:      09:00 - 18:00  ✅
+Quarta-feira:     09:00 - 18:00  ✅
+Quinta-feira:     09:00 - 18:00  ✅
+Sexta-feira:      09:00 - 18:00  ✅
+Sábado:           FECHADO         ❌
+Domingo:          FECHADO         ❌
+
+
+═══════════════════════════════════════════════════════════════════
+  4. CORES DO SITE (Hexadecimal)
+═══════════════════════════════════════════════════════════════════
+
+Cor Principal (Vermelho):  #E63946
+Cor Escura (Preto):        #1A1A1A
+Cor Clara (Branco):        #FFFFFF
+Cor de Fundo:              #F8F9FA
+Cor de Bordas:             #E0E0E0
+Cor de Texto Secundário:   #666666
+Cor de Sucesso (Verde):    #2ECC71
+
+
+═══════════════════════════════════════════════════════════════════
+  5. TAXAS E VALORES
+═══════════════════════════════════════════════════════════════════
+
+Taxa de Entrega: Variável (consultar no ato do pedido)
+Pedido Mínimo: Não possui
+Tempo Médio de Entrega: 30-45 minutos
+Raio de Entrega: [Definir conforme sua região]
+
+
+═══════════════════════════════════════════════════════════════════
+  6. ENDEREÇO E LOCALIZAÇÃO
+═══════════════════════════════════════════════════════════════════
+
+Endereço Completo: [Seu endereço completo]
+CEP: [00000-000]
+Cidade: [Sua cidade]
+Estado: [Seu estado]
+Bairro: [Seu bairro]
+Ponto de Referência: [Referência próxima]
+
+
+═══════════════════════════════════════════════════════════════════
+  7. REDES SOCIAIS (Opcional)
+═══════════════════════════════════════════════════════════════════
+
+Instagram: @deliverygourmet
+Facebook: /deliverygourmet
+Email: contato@deliverygourmet.com.br
+Website: www.deliverygourmet.com.br
+
+
+═══════════════════════════════════════════════════════════════════
+  8. ARQUIVOS QUE PRECISAM SER EDITADOS
+═══════════════════════════════════════════════════════════════════
+
+📝 js/checkout.js
+   Linha 18: this.whatsappNumber = '5594991514909';
+   Linha 19: this.pixKey = '084.375.262-99';
+
+📝 js/schedule.js
+   Linhas 4-11: Objeto businessHours (horários)
+
+📝 js/data.js
+   Todo o arquivo: Produtos do cardápio
+
+📝 css/style.css
+   Linhas 9-18: Variáveis de cores
+
+📝 index.html
+   Linha 6: Título da página
+   Linha 18: Nome do logo
+   Linha 203: Número do WhatsApp no rodapé
+
+
+═══════════════════════════════════════════════════════════════════
+  9. CHECKLIST DE PERSONALIZAÇÃO
+═══════════════════════════════════════════════════════════════════
+
+[ ] Alterar nome do delivery
+[ ] Configurar número do WhatsApp
+[ ] Configurar chave Pix
+[ ] Ajustar horários de funcionamento
+[ ] Adicionar/remover produtos do cardápio
+[ ] Atualizar preços
+[ ] Alterar cores (opcional)
+[ ] Adicionar logo personalizado (opcional)
+[ ] Testar carrinho de compras
+[ ] Testar finalização de pedido
+[ ] Testar pagamento Pix
+[ ] Testar integração WhatsApp
+[ ] Verificar responsividade mobile
+[ ] Testar em diferentes navegadores
+
+
+═══════════════════════════════════════════════════════════════════
+  10. DICAS IMPORTANTES
+═══════════════════════════════════════════════════════════════════
+
+✅ Sempre teste completamente antes de publicar
+✅ Mantenha o número do WhatsApp sempre atualizado
+✅ Verifique a chave Pix regularmente
+✅ Atualize os horários em feriados
+✅ Mantenha as imagens dos produtos atualizadas
+✅ Responda rapidamente os pedidos pelo WhatsApp
+✅ Faça backup dos arquivos antes de editar
+✅ Teste em dispositivos móveis reais
+✅ Verifique se o QR Code Pix está funcionando
+✅ Monitore o localStorage do navegador
+
+
+═══════════════════════════════════════════════════════════════════
+  11. SUPORTE TÉCNICO
+═══════════════════════════════════════════════════════════════════
+
+📖 Documentação Completa: Leia o README.md
+📱 Guia Rápido: Consulte o GUIA-RAPIDO.md
+🔧 Mudanças: Veja o CHANGELOG.md
+🐛 Debug: Use o console (F12) e deliveryDebug
+💬 Contato: WhatsApp (94) 99151-4909
+
+
+═══════════════════════════════════════════════════════════════════
+
+                    🎉 BOA SORTE COM SEU DELIVERY! 🎉
+
+═══════════════════════════════════════════════════════════════════

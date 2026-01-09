@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Delivery Gourmet - Sistema completo de delivery online. Pratos executivos, estrogonofes, parmegianas e muito mais com entrega rápida e segura.">
+    <meta name="keywords" content="delivery, comida, restaurante, pedido online, entrega, ifood">
+    <meta name="author" content="Delivery Gourmet">
+    <title>Delivery Gourmet - Comida de Qualidade</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E63946">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Delivery Gourmet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=32&h=32&fit=crop">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🍽️ Delivery Gourmet</h1>
+                <div class="status-container">
+                    <div class="status" id="status">
+                        <span class="status-dot">🟢</span>
+                        <span class="status-text">ABERTO</span>
+                    </div>
+                    <button class="clock-btn" id="clockBtn" title="Ver horários">
+                        <i class="fas fa-clock"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner de Fechado -->
+    <div class="closed-banner" id="closedBanner">
+        <div class="container">
+            <p><i class="fas fa-info-circle"></i> Estamos fechados no momento. Confira nosso horário de funcionamento.</p>
+        </div>
+    </div>
+
+    <!-- Banner de Próximo Horário -->
+    <div class="next-open-banner" id="nextOpenBanner">
+        <div class="container">
+            <p id="nextOpenText"></p>
+        </div>
+    </div>
+
+    <!-- Carrinho Flutuante -->
+    <div class="cart-float" id="cartFloat">
+        <button class="cart-button" id="cartButton">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main" id="mainContent">
+        <div class="container">
+            
+            <!-- Seção: Pratos Executivos -->
+            <section class="menu-section">
+                <h2 class="section-title">🍖 Pratos Executivos</h2>
+                <p class="section-subtitle">Acompanhamentos: Arroz branco, batata frita, feijão, farofa, salada ou vinagrete.</p>
+                <div class="products-grid" id="pratosExecutivos">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Estrogonofes -->
+            <section class="menu-section">
+                <h2 class="section-title">🍲 Estrogonofes</h2>
+                <div class="products-grid" id="estrogonofes">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Parmegianas -->
+            <section class="menu-section">
+                <h2 class="section-title">🧀 Parmegianas</h2>
+                <div class="products-grid" id="parmegianas">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Outros -->
+            <section class="menu-section">
+                <h2 class="section-title">🍴 Outros</h2>
+                <p class="section-subtitle">Acompanhamentos: Arroz branco, batata, salada ou vinagrete.</p>
+                <div class="products-grid" id="outros">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Panelinhas Individuais -->
+            <section class="menu-section">
+                <h2 class="section-title">🥘 Panelinhas Individuais</h2>
+                <div class="products-grid" id="panelinhas">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Kit Feijoada -->
+            <section class="menu-section">
+                <h2 class="section-title">🫘 Kit Feijoada</h2>
+                <p class="section-subtitle">Acompanhamentos: Arroz branco, farofa com bacon, couve crua, laranja em rodelas e torresmo.</p>
+                <div class="products-grid" id="feijoada">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção: Bebidas -->
+            <section class="menu-section">
+                <h2 class="section-title">🥤 Bebidas</h2>
+                <div class="products-grid" id="bebidas">
+                    <!-- Produtos serão inseridos via JavaScript -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <p class="delivery-info">⚠️ Consulte a taxa de entrega no ato do pedido.</p>
+            <p class="whatsapp-info">📞 WhatsApp: <a href="https://wa.me/5594991514909" target="_blank">(94) 99151-4909</a></p>
+            <p class="footer-message">Seu pedido é preparado com carinho e entregue com segurança ❤️</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Horários -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"><i class="fas fa-clock"></i> Horário de Funcionamento</h3>
+            <div class="schedule-table">
+                <div class="schedule-row">
+                    <span class="schedule-day">Segunda-feira</span>
+                    <span class="schedule-time">09:00 - 18:00</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Terça-feira</span>
+                    <span class="schedule-time">09:00 - 18:00</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Quarta-feira</span>
+                    <span class="schedule-time">09:00 - 18:00</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Quinta-feira</span>
+                    <span class="schedule-time">09:00 - 18:00</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Sexta-feira</span>
+                    <span class="schedule-time">09:00 - 18:00</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Sábado</span>
+                    <span class="schedule-time closed">Fechado</span>
+                </div>
+                <div class="schedule-row">
+                    <span class="schedule-day">Domingo</span>
+                    <span class="schedule-time closed">Fechado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do Carrinho -->
+    <div class="modal" id="cartModal">
+        <div class="modal-overlay" id="cartModalOverlay"></div>
+        <div class="modal-content modal-cart">
+            <button class="modal-close" id="cartModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"><i class="fas fa-shopping-cart"></i> Meu Carrinho</h3>
+            <div class="cart-items" id="cartItems">
+                <!-- Itens do carrinho serão inseridos via JavaScript -->
+            </div>
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Seu carrinho está vazio</p>
+            </div>
+            <div class="cart-summary" id="cartSummary">
+                <div class="cart-total">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">R$ 0,00</span>
+                </div>
+                <p class="delivery-note">⚠️ Consulte a taxa de entrega no ato do pedido.</p>
+                <button class="btn btn-primary btn-block" id="checkoutBtn">
+                    Finalizar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-overlay" id="checkoutModalOverlay"></div>
+        <div class="modal-content modal-checkout">
+            <button class="modal-close" id="checkoutModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"><i class="fas fa-user"></i> Seus Dados</h3>
+            <form class="checkout-form" id="checkoutForm">
+                <div class="form-group">
+                    <label for="customerName">Nome completo</label>
+                    <input type="text" id="customerName" required placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Endereço completo</label>
+                    <textarea id="customerAddress" required placeholder="Rua, número, bairro, cidade" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Telefone / WhatsApp</label>
+                    <input type="tel" id="customerPhone" required placeholder="(00) 00000-0000">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    Continuar para Pagamento
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Pagamento -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-overlay" id="paymentModalOverlay"></div>
+        <div class="modal-content modal-payment">
+            <button class="modal-close" id="paymentModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"><i class="fas fa-credit-card"></i> Forma de Pagamento</h3>
+            <div class="payment-options">
+                <button class="payment-option" id="paymentCash">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Dinheiro</span>
+                </button>
+                <button class="payment-option" id="paymentPix">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Pix</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pix -->
+    <div class="modal" id="pixModal">
+        <div class="modal-overlay" id="pixModalOverlay"></div>
+        <div class="modal-content modal-pix">
+            <button class="modal-close" id="pixModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="modal-title"><i class="fas fa-qrcode"></i> Pagamento via Pix</h3>
+            <div class="pix-content">
+                <div class="pix-qrcode" id="pixQRCode">
+                    <!-- QR Code será inserido via JavaScript -->
+                </div>
+                <div class="pix-info">
+                    <p class="pix-value">Valor: <strong id="pixValue">R$ 0,00</strong></p>
+                    <p class="pix-key">Chave Pix (CPF): <strong>084.375.262-99</strong></p>
+                    <button class="btn btn-secondary btn-block" id="copyPixKey">
+                        <i class="fas fa-copy"></i> Copiar Chave Pix
+                    </button>
+                </div>
+                <div class="pix-instructions">
+                    <h4>📱 Como pagar:</h4>
+                    <ol>
+                        <li>Abra o app do seu banco</li>
+                        <li>Escolha a opção Pix</li>
+                        <li>Escaneie o QR Code ou copie a chave</li>
+                        <li>Confirme o pagamento</li>
+                    </ol>
+                </div>
+                <button class="btn btn-primary btn-block" id="confirmPixPayment">
+                    Confirmar Pagamento e Enviar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

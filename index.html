@@ -14,6 +14,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Delivery Gourmet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=32&h=32&fit=crop">
@@ -23,6 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="main.js"></script>
 </head>
 <body>
     <!-- Cabeçalho -->
@@ -209,6 +212,8 @@
         </div>
     </div>
 
+    
+
     <!-- Modal de Checkout -->
     <div class="modal" id="checkoutModal">
         <div class="modal-overlay" id="checkoutModalOverlay"></div>
@@ -292,6 +297,50 @@
             </div>
         </div>
     </div>
+
+
+
+    MODAL PRODUTO ================= -->
+<div class="modal" id="productModal">
+    <div class="modal-overlay" id="productModalOverlay"></div>
+
+    <div class="modal-content modal-product">
+        <button class="modal-close" id="productModalClose">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="product-carousel">
+    <img id="productModalImage" src="">
+
+    <button class="carousel-btn prev">‹</button>
+    <button class="carousel-btn next">›</button>
+</div>
+        
+
+        <div class="product-modal-body">
+            <h3 id="productModalTitle"></h3>
+            <p id="productModalDescription"></p>
+
+            <div class="product-modal-footer">
+                <span class="product-modal-price" id="productModalPrice"></span>
+
+                <div class="qty-control">
+                    <button id="productModalMinus">-</button>
+                    <span id="productModalQty">1</span>
+                    <button id="productModalPlus">+</button>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="productModalAdd">
+                Adicionar ao carrinho
+            </button>
+        </div>
+    </div>
+</div>
+<!-- =============== FIM MODAL PRODUTO =============== -->
+
+    
+
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="js/data.js"></script>

@@ -2,12 +2,20 @@
 const menuData = {
     pratosExecutivos: [
         {
-            id: 'pe-01',
-            name: 'Bife a Cavalo',
-            description: 'Bife suculento com ovo frito, acompanhamentos completos',
-            price: 24.00,
-            image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
-            category: 'pratosExecutivos'
+            
+    id: 'pe-01',
+    name: 'Bife a Cavalo',
+    description: 'Bife suculento com ovo frito, acompanhamentos completos',
+    price: 24.00,
+    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+
+    images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+    category: 'pratosExecutivos'
+
         },
         {
             id: 'pe-02',
@@ -15,6 +23,13 @@ const menuData = {
             description: 'Bife macio com cebolas caramelizadas',
             price: 20.00,
             image: 'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -23,6 +38,13 @@ const menuData = {
             description: 'Peito de frango grelhado temperado com ervas',
             price: 18.00,
             image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -31,6 +53,13 @@ const menuData = {
             description: 'Calabresa, frango e carne na chapa',
             price: 22.00,
             image: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -39,6 +68,13 @@ const menuData = {
             description: 'Picanha nobre grelhada ao ponto',
             price: 30.00,
             image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -47,6 +83,13 @@ const menuData = {
             description: 'Filé mignon macio e suculento',
             price: 26.00,
             image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -55,6 +98,13 @@ const menuData = {
             description: 'Bisteca de porco grelhada e temperada',
             price: 19.00,
             image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         },
         {
@@ -63,6 +113,13 @@ const menuData = {
             description: 'Peixe fresco grelhado com limão',
             price: 30.00,
             image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'pratosExecutivos'
         }
     ],
@@ -74,6 +131,13 @@ const menuData = {
             description: 'Frango cremoso com molho especial e cogumelos',
             price: 20.00,
             image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'estrogonofes'
         },
         {
@@ -82,6 +146,13 @@ const menuData = {
             description: 'Filé mignon em molho cremoso com champignon',
             price: 25.00,
             image: 'https://images.unsplash.com/photo-1612760698919-ea060e0b4cf0?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'estrogonofes'
         }
     ],
@@ -93,6 +164,13 @@ const menuData = {
             description: 'Bife empanado com molho de tomate e queijo gratinado',
             price: 25.00,
             image: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'parmegianas'
         },
         {
@@ -101,6 +179,13 @@ const menuData = {
             description: 'Frango empanado com molho e queijo derretido',
             price: 21.00,
             image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'parmegianas'
         }
     ],
@@ -112,6 +197,13 @@ const menuData = {
             description: 'Almôndegas suculentas com recheio especial',
             price: 20.00,
             image: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'outros'
         }
     ],
@@ -123,6 +215,13 @@ const menuData = {
             description: 'Frango cremoso servido em panelinha individual',
             price: 25.00,
             image: 'https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'panelinhas'
         },
         {
@@ -131,6 +230,13 @@ const menuData = {
             description: 'Filé mignon ao molho em panelinha individual',
             price: 30.00,
             image: 'https://images.unsplash.com/photo-1606850780554-b55af0a49dd4?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+
             category: 'panelinhas'
         },
         {
@@ -139,6 +245,13 @@ const menuData = {
             description: 'Camarões frescos ao molho cremoso',
             price: 35.00,
             image: 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+    
             category: 'panelinhas'
         }
     ],
@@ -211,6 +324,7 @@ const menuData = {
             image: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=300&fit=crop',
             category: 'bebidas'
         }
+        
     ]
 };
 
@@ -232,3 +346,5 @@ function formatPrice(price) {
         currency: 'BRL'
     }).format(price);
 }
+
+

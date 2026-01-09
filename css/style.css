@@ -817,6 +817,7 @@ body {
 }
 
 
+
 /* ===== CORREÇÃO BOTÃO ADD NO MOBILE ===== */
 @media (max-width: 767px) {
     .product-footer {
@@ -831,4 +832,166 @@ body {
     .btn-add {
         width: 100%;
     }
+}
+
+
+/* ===== MODAL PRODUTO ===== */
+/* ===== MODAL PRODUTO (ISOLADO) ===== */
+.modal-product-wrapper {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-product-wrapper.active {
+    display: flex;
+}
+
+
+/* ===== MODAL OVERLAY ===== */
+#productModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: 9999;
+}
+
+#productModal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ===== CAIXA DO MODAL ===== */
+#productModal .modal-content {
+    width: 92%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    animation: scaleIn .25s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(.9); opacity: 0 }
+    to { transform: scale(1); opacity: 1 }
+}
+
+/* ===== CARROSSEL ===== */
+.product-carousel {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    background: #000;
+}
+
+.product-carousel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+}
+
+
+/* ===== SETAS ===== */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,.6);
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* ===== BOTÃO FECHAR ===== */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,.6);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    font-size: 18px;
+    z-index: 3;
+}
+
+/* ===== CONTEÚDO ===== */
+.product-modal-body {
+    padding: 16px;
+}
+
+.product-modal-body h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.product-modal-body p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ===== FOOTER ===== */
+.product-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.product-modal-price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.qty-control {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.qty-control button {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: #e53935;
+    color: #fff;
+    font-size: 18px;
+}
+
+#productModalAdd {
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #e53935;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
 }

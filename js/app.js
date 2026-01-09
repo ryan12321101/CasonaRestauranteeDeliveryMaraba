@@ -16,7 +16,9 @@ function renderProducts() {
                     <div class="product-name">${product.name}</div>
                     <div class="product-description">${product.description}</div>
                     <div class="product-footer">
-                        <div class="product-price">${formatPrice(product.price)}</div>
+                        <div class="product-price">
+  ${formatPrice(product.price)}
+</div>
                         <button class="btn-add" onclick="handleAddToCart('${product.id}')" ${!window.scheduleSystem.isOpenNow() ? 'disabled' : ''}>
                             <i class="fas fa-plus"></i>
                         </button>
@@ -46,6 +48,8 @@ function updateButtonsStatus() {
         button.disabled = !isOpen;
     });
 }
+
+
 
 // Inicializar aplicação
 function initApp() {
@@ -197,3 +201,123 @@ window.deliveryDebug = {
 console.log('%c💻 Desenvolvedor?', 'color: #E63946; font-size: 20px; font-weight: bold;');
 console.log('%cEste site foi desenvolvido com as melhores práticas de web development!', 'color: #666; font-size: 14px;');
 console.log('%cUse deliveryDebug no console para ver funções úteis', 'color: #2ECC71; font-size: 12px;');
+
+
+/* ========================= */
+/* SEU app.js ORIGINAL AQUI */
+/* ========================= */
+
+let currentProduct = null;
+let currentQty = 1;
+
+// ===== CARROSSEL =====
+let currentImages = [];
+let currentImageIndex = 0;
+
+// ================= RENDERIZA PRODUTOS =================
+function renderProducts() {
+    Object.keys(menuData).forEach(category => {
+        const container = document.getElementById(category);
+        if (!container) return;
+
+        container.innerHTML = menuData[category].map(product => `
+            <div class="product-card" onclick="openProductModal('${product.id}')">
+                <img src="${product.image}" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-description">${product.description}</div>
+                    <div class="product-footer">
+                        <span class="product-price">${formatPrice(product.price)}</span>
+                        <button class="btn-add" onclick="event.stopPropagation(); cart.addItem('${product.id}')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    });
+}
+
+// ================= MODAL PRODUTO =================
+function openProductModal(productId) {
+    currentProduct = null;
+
+    Object.values(menuData).forEach(category => {
+        category.forEach(product => {
+            if (product.id === productId) currentProduct = product;
+        });
+    });
+
+    if (!currentProduct) return;
+
+    currentQty = 1;
+
+    // ===== IMAGENS =====
+    currentImages = currentProduct.images?.length
+        ? currentProduct.images
+        : [currentProduct.image, currentProduct.image];
+
+    currentImageIndex = 0;
+
+    // ===== POPULA MODAL =====
+    document.getElementById('productModalImage').src = currentImages[0];
+    document.getElementById('productModalTitle').textContent = currentProduct.name;
+    document.getElementById('productModalDescription').textContent = currentProduct.description;
+    document.getElementById('productModalPrice').textContent = formatPrice(currentProduct.price);
+    document.getElementById('productModalQty').textContent = currentQty;
+
+    document.getElementById('productModal').classList.add('active');
+}
+
+// ================= CARROSSEL =================
+function initCarousel() {
+    const prev = document.querySelector('.carousel-btn.prev');
+    const next = document.querySelector('.carousel-btn.next');
+    const img = document.getElementById('productModalImage');
+
+    if (!prev || !next || !img) return;
+
+    prev.onclick = () => {
+        currentImageIndex =
+            (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+        img.src = currentImages[currentImageIndex];
+    };
+
+    next.onclick = () => {
+        currentImageIndex =
+            (currentImageIndex + 1) % currentImages.length;
+        img.src = currentImages[currentImageIndex];
+    };
+}
+
+// ================= FECHAR MODAL =================
+function closeProductModal() {
+    document.getElementById('productModal').classList.remove('active');
+}
+
+// ================= CONTROLES =================
+document.getElementById('productModalPlus').onclick = () => {
+    currentQty++;
+    document.getElementById('productModalQty').textContent = currentQty;
+};
+
+document.getElementById('productModalMinus').onclick = () => {
+    if (currentQty > 1) currentQty--;
+    document.getElementById('productModalQty').textContent = currentQty;
+};
+
+document.getElementById('productModalAdd').onclick = () => {
+    for (let i = 0; i < currentQty; i++) {
+        cart.addItem(currentProduct.id);
+    }
+    closeProductModal();
+};
+
+document.getElementById('productModalClose').onclick = closeProductModal;
+document.getElementById('productModalOverlay').onclick = closeProductModal;
+
+// ================= INIT =================
+document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    initCarousel(); // 🔥 AGORA FUNCIONA
+});

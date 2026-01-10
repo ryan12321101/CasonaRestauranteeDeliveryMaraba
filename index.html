@@ -94,6 +94,7 @@
     </div>
 </div>
 
+
     <!-- Main Content -->
     <main class="main" id="mainContent">
         <div class="container">
@@ -158,6 +159,8 @@
             </section>
 
         </div>
+
+        <div id="allProducts"></div>
     </main>
 
     <!-- Rodapé -->
@@ -376,12 +379,32 @@ document.getElementById('secretEmoji').onclick = () => {
 };
 </script>
 
+<!-- Firebase (OBRIGATÓRIO vir antes) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
+<!-- Seu Firebase -->
+<script src="firebase.js"></script>
+
+
+    <!-- Firebase (usando compat para funcionar sem build) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Configuração do Firebase -->
+    <script src="firebase.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="js/data.js"></script>
     <script src="js/schedule.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/checkout.js"></script>
     <script src="js/app.js"></script>
+    
+    <!-- Integração Firebase - Filtrar produtos inativos -->
+    <script src="js/app-firebase.js"></script>
+
+
+    
 </body>
 </html>

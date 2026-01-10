@@ -1,251 +1,805 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Secreto de Produtos</title>
-<style>
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f5f5f5;
-        color: #1a1a1a;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 0 16px;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #E63946;
-    }
-    .password-screen, .panel {
-        display: none;
-        background: #fff;
-        padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .password-screen.active, .panel.active {
-        display: block;
-    }
-    .password-screen input {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 2px solid #ddd;
-        margin-bottom: 16px;
-        font-size: 16px;
-    }
-    .password-screen button {
-        width: 100%;
-        padding: 12px;
-        background: #E63946;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-    .product-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-    .product-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f1f1f1;
-        padding: 12px 16px;
-        border-radius: 8px;
-    }
-    .product-item span {
-        font-weight: 600;
-    }
-    .product-item button {
-        padding: 6px 12px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        transition: 0.2s;
-    }
-    .active-btn {
-        background: #2ECC71;
-        color: #fff;
-    }
-    .inactive-btn {
-        background: #FF3D00;
-        color: #fff;
-    }
-    #adminBackBtn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background-color: #E63946;
-        color: #fff;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
-        z-index: 10000;
-    }
-    #adminBackBtn:hover {
-        background-color: #C41E2A;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Delivery Gourmet</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== RESET E VARIÁVEIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #E63946;
+            --dark-black: #1A1A1A;
+            --pure-white: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --border-gray: #E0E0E0;
+            --text-gray: #666666;
+            --success-green: #2ECC71;
+            --info-blue: #3498DB;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-black);
+            line-height: 1.6;
+        }
+
+        /* ===== TELA DE LOGIN ===== */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #C41E2A 100%);
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--pure-white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-black);
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-black);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-red);
+            color: var(--pure-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: #C41E2A;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .login-error {
+            background: #FFE5E5;
+            color: #C41E2A;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* ===== PAINEL ADMIN ===== */
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        /* Header do Admin */
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #C41E2A 100%);
+            color: var(--pure-white);
+            padding: 20px 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .admin-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-sair {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--pure-white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-sair:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Estatísticas */
+        .stats-container {
+            max-width: 1400px;
+            margin: 24px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .stat-icon.total {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: var(--pure-white);
+        }
+
+        .stat-icon.ativos {
+            background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+            color: var(--pure-white);
+        }
+
+        .stat-icon.inativos {
+            background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+            color: var(--pure-white);
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-black);
+        }
+
+        .stat-info p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Controles */
+        .controls-container {
+            max-width: 1400px;
+            margin: 0 auto 24px;
+            padding: 0 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .btn-action {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-ativar-todos {
+            background: var(--success-green);
+            color: var(--pure-white);
+        }
+
+        .btn-ativar-todos:hover {
+            background: #27AE60;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-desativar-todos {
+            background: #E74C3C;
+            color: var(--pure-white);
+        }
+
+        .btn-desativar-todos:hover {
+            background: #C0392B;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Lista de Produtos */
+        .produtos-container {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            padding: 0 24px;
+        }
+
+        .categoria-secao {
+            background: var(--pure-white);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .categoria-titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-black);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-gray);
+        }
+
+        .produtos-categoria {
+            display: grid;
+            gap: 16px;
+        }
+
+        .produto-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .produto-item:hover {
+            border-color: var(--primary-red);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .produto-item.inativo {
+            opacity: 0.6;
+            background: #FAFAFA;
+        }
+
+        .produto-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .produto-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .produto-detalhes {
+            flex: 1;
+        }
+
+        .produto-nome {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-black);
+            margin-bottom: 4px;
+        }
+
+        .produto-desc {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .produto-preco {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-right: 12px;
+        }
+
+        .produto-id {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            background: var(--light-gray);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .produto-acoes {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Switch Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.ativo {
+            background: #D5F5E3;
+            color: #27AE60;
+        }
+
+        .status-badge.inativo {
+            background: #FADBD8;
+            color: #C0392B;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            color: var(--pure-white);
+        }
+
+        .loading-spinner i {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            font-weight: 600;
+            z-index: 10000;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            bottom: 24px;
+        }
+
+        .toast.toast-success {
+            background: var(--success-green);
+            color: var(--pure-white);
+        }
+
+        .toast.toast-info {
+            background: var(--info-blue);
+            color: var(--pure-white);
+        }
+
+        /* Mensagens */
+        .mensagem-vazia,
+        .mensagem-erro {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .mensagem-vazia i,
+        .mensagem-erro i {
+            font-size: 4rem;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+
+        .mensagem-erro i {
+            color: var(--primary-red);
+        }
+
+        .mensagem-vazia h3,
+        .mensagem-erro h3 {
+            font-size: 1.5rem;
+            color: var(--dark-black);
+            margin-bottom: 8px;
+        }
+
+        .mensagem-vazia p,
+        .mensagem-erro p {
+            color: var(--text-gray);
+        }
+
+        .mensagem-vazia small {
+            display: block;
+            margin-top: 12px;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-container {
+                flex-direction: column;
+            }
+
+            .produto-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .produto-acoes {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<button id="adminBackBtn">🔙 Voltar</button>
-
-<div class="container">
-    <h1>Painel Secreto</h1>
-
-    <!-- Tela de senha -->
-    <div class="password-screen active" id="passwordScreen">
-        <input type="password" id="secretPassword" placeholder="Digite a senha">
-        <button id="enterPassword">Entrar</button>
-    </div>
-
-    <!-- Painel de produtos -->
-    <div class="panel" id="productPanel">
-        <div class="product-list" id="productList">
-            <!-- Produtos vão ser carregados aqui via JS -->
+    <!-- ===== TELA DE LOGIN ===== -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">🔐</div>
+            <h1 class="login-title">Painel Administrativo</h1>
+            <p class="login-subtitle">Delivery Gourmet</p>
+            
+            <form id="loginForm" onsubmit="fazerLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="senha">Senha de Acesso</label>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        class="form-input" 
+                        placeholder="Digite a senha"
+                        required
+                        autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Entrar no Painel
+                </button>
+            </form>
+            
+            <div class="login-error" id="loginError">
+                <i class="fas fa-exclamation-circle"></i>
+                Senha incorreta. Tente novamente.
+            </div>
         </div>
     </div>
-</div>
 
-<script type="module">
-    // ===== Firebase =====
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-    import { getFirestore, collection, doc, getDocs, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDK8uHud9vukHhSwayfdcpaCN2AUR4-ySg",
-        authDomain: "painel-47b0e.firebaseapp.com",
-        projectId: "painel-47b0e",
-        storageBucket: "painel-47b0e.firebasestorage.app",
-        messagingSenderId: "732719130916",
-        appId: "1:732719130916:web:15b617ae946eb5a06dabb1"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // ===== Configurações =====
-    const PASSWORD = "1234"; // senha secreta
-
-    // ===== Funções para status local =====
-    function loadProductStatus() {
-        return JSON.parse(localStorage.getItem('productStatus')) || {};
-    }
-
-    function saveProductStatus(status) {
-        localStorage.setItem('productStatus', JSON.stringify(status));
-    }
-
-    // ===== Lista completa de produtos (ID + Nome) =====
-    const products = [
-        {id: 'pe-01', name: 'Bife a Cavalo'},
-        {id: 'pe-02', name: 'Bife Acebolado'},
-        {id: 'pe-03', name: 'Frango Grelhado'},
-        {id: 'pe-04', name: 'Chapa Mista'},
-        {id: 'pe-05', name: 'Picanha Grelhada'},
-        {id: 'pe-06', name: 'Filé Mignon Grelhado'},
-        {id: 'pe-07', name: 'Bisteca Suína'},
-        {id: 'pe-08', name: 'Peixe Grelhado'},
-        {id: 'es-01', name: 'Estrogonofe de Frango'},
-        {id: 'es-02', name: 'Estrogonofe de Filé Mignon'},
-        {id: 'pm-01', name: 'Parmegiana de Carne'},
-        {id: 'pm-02', name: 'Parmegiana de Frango'},
-        {id: 'ou-01', name: 'Almôndegas de Carne Recheada'},
-        {id: 'pn-01', name: 'Panelinha de Frango'},
-        {id: 'pn-02', name: 'Panelinha de Filé Mignon'},
-        {id: 'pn-03', name: 'Panelinha de Camarão'},
-        {id: 'fj-01', name: 'Kit Feijoada (1 pessoa)'},
-        {id: 'fj-02', name: 'Kit Feijoada (2 pessoas)'},
-        {id: 'bb-01', name: 'Coca-Cola Lata'},
-        {id: 'bb-02', name: 'Coca-Cola 600ml'},
-        {id: 'bb-03', name: 'Coca-Cola 1L'},
-        {id: 'bb-04', name: 'Coca-Cola 2L'},
-        {id: 'bb-05', name: 'Suco Del Valle (Laranja)'},
-        {id: 'bb-06', name: 'Suco Del Valle (Uva)'}
-    ];
-
-    // ===== Render do Painel Secreto =====
-    async function renderProductList() {
-        const statusLocal = loadProductStatus();
-        const listContainer = document.getElementById('productList');
-        listContainer.innerHTML = '';
-
-        // Busca produtos do Firebase
-        const snapshot = await getDocs(collection(db, "products"));
-        snapshot.forEach(docSnap => {
-            const p = { id: docSnap.id, ...docSnap.data() };
-            const isActive = p.active !== false;
-
-            const item = document.createElement('div');
-            item.className = 'product-item';
-            item.innerHTML = `
-                <span>${p.name}</span>
-                <button class="${isActive ? 'active-btn' : 'inactive-btn'}">
-                    ${isActive ? 'Ativo' : 'Esgotado'}
+    <!-- ===== PAINEL ADMINISTRATIVO ===== -->
+    <div class="admin-panel" id="adminPanel">
+        
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <h1 class="admin-title">
+                    <i class="fas fa-cog"></i>
+                    Painel Administrativo
+                </h1>
+                <button class="btn-sair" onclick="sairPainel()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
                 </button>
-            `;
+            </div>
+        </header>
 
-            const btn = item.querySelector('button');
-            btn.onclick = async () => {
-                // Atualiza no Firebase
-                await toggleProductStatus(p.id, isActive);
+        <!-- Estatísticas -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalProdutos">0</h3>
+                    <p>Total de Produtos</p>
+                </div>
+            </div>
 
-                // Atualiza local
-                statusLocal[p.id] = !isActive;
-                saveProductStatus(statusLocal);
-            };
+            <div class="stat-card">
+                <div class="stat-icon ativos">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="produtosAtivos">0</h3>
+                    <p>Produtos Ativos</p>
+                </div>
+            </div>
 
-            listContainer.appendChild(item);
-        });
-    }
+            <div class="stat-card">
+                <div class="stat-icon inativos">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="produtosInativos">0</h3>
+                    <p>Produtos Inativos</p>
+                </div>
+            </div>
+        </div>
 
-    async function toggleProductStatus(productId, currentStatus) {
-        const productRef = doc(db, "products", productId);
-        await updateDoc(productRef, { active: !currentStatus });
-    }
+        <!-- Controles -->
+        <div class="controls-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input 
+                    type="text" 
+                    id="buscaProduto" 
+                    placeholder="Buscar produto por nome, descrição ou ID...">
+            </div>
+            
+            <button class="btn-action btn-ativar-todos" onclick="toggleTodos(true)">
+                <i class="fas fa-check-circle"></i>
+                Ativar Todos
+            </button>
+            
+            <button class="btn-action btn-desativar-todos" onclick="toggleTodos(false)">
+                <i class="fas fa-times-circle"></i>
+                Desativar Todos
+            </button>
+        </div>
 
-    // ===== Atualização em tempo real =====
-    onSnapshot(collection(db, "products"), snapshot => {
-        renderProductList(); // atualiza sempre que houver mudança
-    });
+        <!-- Lista de Produtos -->
+        <div class="produtos-container">
+            <div id="produtosLista">
+                <!-- Produtos serão renderizados aqui via JavaScript -->
+            </div>
+        </div>
 
-    // ===== Login =====
-    document.getElementById('enterPassword').onclick = () => {
-        const input = document.getElementById('secretPassword').value;
-        if(input === PASSWORD){
-            document.getElementById('passwordScreen').classList.remove('active');
-            document.getElementById('productPanel').classList.add('active');
-            renderProductList();
-        } else {
-            alert('Senha incorreta!');
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    
+
+    
+    <!-- Firebase (usando compat para funcionar sem build) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Configuração do Firebase -->
+    <script src="firebase.js"></script>
+    
+    <!-- Data do cardápio (necessário para popular Firestore) -->
+    <script src="js/data.js"></script>
+    
+    <!-- Lógica do Admin -->
+    <script src="js/admin.js"></script>
+    
+    <!-- Lógica de Login -->
+    <script>
+        // ===== SISTEMA DE LOGIN =====
+        // Senha fixa: 1234 (apenas validação simples em JavaScript)
+        // NOTA: Em produção, use autenticação adequada (Firebase Auth, etc)
+        
+        const SENHA_ADMIN = '1234';
+        
+        function fazerLogin(event) {
+            event.preventDefault();
+            
+            const senhaDigitada = document.getElementById('senha').value;
+            const loginError = document.getElementById('loginError');
+            
+            if (senhaDigitada === SENHA_ADMIN) {
+                // Login bem-sucedido
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminPanel').classList.add('active');
+                loginError.classList.remove('show');
+                
+                console.log('✅ Login realizado com sucesso');
+            } else {
+                // Senha incorreta
+                loginError.classList.add('show');
+                document.getElementById('senha').value = '';
+                document.getElementById('senha').focus();
+                
+                // Animação de shake
+                const loginBox = document.querySelector('.login-box');
+                loginBox.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    loginBox.style.animation = '';
+                }, 500);
+            }
         }
-    };
+        
+        // Animação de shake para erro
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 
-    // ===== Botão Voltar =====
-    document.getElementById('adminBackBtn').onclick = () => {
-        window.location.href = 'index.html';
-    };
-</script>
+    
 
 </body>
 </html>

@@ -231,30 +231,21 @@ function renderProducts() {
         const container = document.getElementById(category);
         if (!container) return;
 
-        const status = JSON.parse(localStorage.getItem('productStatus')) || {};
-
-        container.innerHTML = menuData[category].map(product => {
-            const isActive = status[product.id] !== false; // true ou undefined = ativo
-            return `
-                <div class="product-card" onclick="openProductModal('${product.id}')">
-                    <img src="${product.image}" class="product-image">
-                    <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-description">${product.description}</div>
-                        <div class="product-footer">
-                            <span class="product-price">
-                                ${isActive ? formatPrice(product.price) : 'ESGOTADO'}
-                            </span>
-                            <button class="btn-add" 
-                                onclick="event.stopPropagation(); cart.addItem('${product.id}')" 
-                                ${!isActive || !window.scheduleSystem.isOpenNow() ? 'disabled' : ''}>
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
+        container.innerHTML = menuData[category].map(product => `
+            <div class="product-card" onclick="openProductModal('${product.id}')">
+                <img src="${product.image}" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-description">${product.description}</div>
+                    <div class="product-footer">
+                        <span class="product-price">${formatPrice(product.price)}</span>
+                        <button class="btn-add" onclick="event.stopPropagation(); cart.addItem('${product.id}')">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                 </div>
-            `;
-        }).join('');
+            </div>
+        `).join('');
     });
 }
 
@@ -262,43 +253,33 @@ function renderProducts() {
 function openProductModal(productId) {
     currentProduct = null;
 
-    // Procurar o produto
     Object.values(menuData).forEach(category => {
         category.forEach(product => {
-            if(product.id === productId) currentProduct = product;
+            if (product.id === productId) currentProduct = product;
         });
     });
 
-    if(!currentProduct) return;
+    if (!currentProduct) return;
 
     currentQty = 1;
 
-    // Verifica status
-    const status = JSON.parse(localStorage.getItem('productStatus')) || {};
-    const isActive = status[currentProduct.id] !== false; // true = ativo
+    // ===== IMAGENS =====
+    currentImages = currentProduct.images?.length
+        ? currentProduct.images
+        : [currentProduct.image, currentProduct.image];
+
+    currentImageIndex = 0;
 
     // ===== POPULA MODAL =====
-    document.getElementById('productModalImage').src = currentProduct.image;
+    document.getElementById('productModalImage').src = currentImages[0];
     document.getElementById('productModalTitle').textContent = currentProduct.name;
     document.getElementById('productModalDescription').textContent = currentProduct.description;
     document.getElementById('productModalPrice').textContent = formatPrice(currentProduct.price);
     document.getElementById('productModalQty').textContent = currentQty;
 
-    const addBtn = document.getElementById('productModalAdd');
-    if(!isActive){
-        addBtn.textContent = "Esgotado";
-        addBtn.disabled = true;
-        addBtn.style.backgroundColor = "#FF3D00";
-        addBtn.style.cursor = "not-allowed";
-    } else {
-        addBtn.textContent = "Adicionar";
-        addBtn.disabled = false;
-        addBtn.style.backgroundColor = "#E63946";
-        addBtn.style.cursor = "pointer";
-    }
-
     document.getElementById('productModal').classList.add('active');
 }
+
 // ================= CARROSSEL =================
 function initCarousel() {
     const prev = document.querySelector('.carousel-btn.prev');
@@ -378,7 +359,14 @@ function initDailyBanner() {
         6: { id: 'pe-02', title: 'Dia da Fejoada', promo: 'Sábado com bife acebolado 😋' }
     };
 
-    
+    const dailyBannerImages = {
+    1: 'img/banner/segunda.jpg',
+    2: 'img/banner/terca.jpg',
+    3: 'img/banner/quarta.jpg',
+    4: 'img/banner/quinta.jpg',
+    5: 'img/banner/Sem título.jpg',
+    6: 'img/banner/sabado.jpg'
+};
 
     const today = dailyMenu[day];
     if (!today) return;
@@ -410,7 +398,7 @@ function initDailyModal() {
         3: { id: 'pm-02', title: 'Macarronada', promo: 'Macarronada fresquinha 🍝' },
         4: { id: 'fj-01', title: 'Feijoada', promo: 'Quinta é dia de feijoada!' },
         5: { id: 'pe-03', title: 'Frango Grelhado', promo: 'Promoção especial de sexta!' },
-        6: { id: 'pe-02', title: 'Dia da Fejoada', promo: 'Sábado especial 😋' }
+        6: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado especial 😋' }
     };
 
     const today = dailyMenu[day];

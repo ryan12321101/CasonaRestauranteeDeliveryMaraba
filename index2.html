@@ -84,7 +84,7 @@
         color: #fff;
     }
 
-    /* Botão voltar do painel secreto */
+    /* Botão voltar */
     #adminBackBtn {
         position: fixed;
         top: 20px;
@@ -110,7 +110,6 @@
 </head>
 <body>
 
-<!-- Botão de voltar -->
 <button id="adminBackBtn">🔙 Voltar</button>
 
 <div class="container">
@@ -133,14 +132,40 @@
 <script>
     // ===== Configurações =====
     const PASSWORD = "1234"; // senha secreta
+
+    // Lista completa de produtos (todos os produtos do cardápio)
     const products = [
-        {id: 'ou-01', name: 'Cozidão'},
-        {id: 'pe-07', name: 'Carne de Sol'},
-        {id: 'pm-02', name: 'Macarronada'},
-        {id: 'fj-01', name: 'Feijoada'},
-        {id: 'pe-03', name: 'Frango Grelhado'},
-        {id: 'pe-02', name: 'Bife Acebolado'}
-    ];
+    {id: 'pe-01', name: 'Bife a Cavalo'},
+    {id: 'pe-02', name: 'Bife Acebolado'},
+    {id: 'pe-03', name: 'Frango Grelhado'},
+    {id: 'pe-04', name: 'Chapa Mista'},
+    {id: 'pe-05', name: 'Picanha Grelhada'},
+    {id: 'pe-06', name: 'Filé Mignon Grelhado'},
+    {id: 'pe-07', name: 'Bisteca Suína'},
+    {id: 'pe-08', name: 'Peixe Grelhado'},
+    
+    {id: 'es-01', name: 'Estrogonofe de Frango'},
+    {id: 'es-02', name: 'Estrogonofe de Filé Mignon'},
+    
+    {id: 'pm-01', name: 'Parmegiana de Carne'},
+    {id: 'pm-02', name: 'Parmegiana de Frango'},
+    
+    {id: 'ou-01', name: 'Almôndegas de Carne Recheada'},
+    
+    {id: 'pn-01', name: 'Panelinha de Frango'},
+    {id: 'pn-02', name: 'Panelinha de Filé Mignon'},
+    {id: 'pn-03', name: 'Panelinha de Camarão'},
+    
+    {id: 'fj-01', name: 'Kit Feijoada (1 pessoa)'},
+    {id: 'fj-02', name: 'Kit Feijoada (2 pessoas)'},
+    
+    {id: 'bb-01', name: 'Coca-Cola Lata'},
+    {id: 'bb-02', name: 'Coca-Cola 600ml'},
+    {id: 'bb-03', name: 'Coca-Cola 1L'},
+    {id: 'bb-04', name: 'Coca-Cola 2L'},
+    {id: 'bb-05', name: 'Suco Del Valle (Laranja)'},
+    {id: 'bb-06', name: 'Suco Del Valle (Uva)'}
+];
 
     // ===== Funções =====
     function loadProductStatus() {
@@ -155,14 +180,15 @@
         const status = loadProductStatus();
         const listContainer = document.getElementById('productList');
         listContainer.innerHTML = '';
+
         products.forEach(p => {
-            const isActive = status[p.id] !== false; // se undefined ou true => ativo
+            const isActive = status[p.id] !== false;
             const item = document.createElement('div');
             item.className = 'product-item';
             item.innerHTML = `
                 <span>${p.name}</span>
                 <button class="${isActive ? 'active-btn' : 'inactive-btn'}">
-                    ${isActive ? 'Ativo' : 'Desativado'}
+                    ${isActive ? 'Ativo' : 'Esgotado'}
                 </button>
             `;
             const btn = item.querySelector('button');
@@ -170,6 +196,8 @@
                 status[p.id] = !isActive;
                 saveProductStatus(status);
                 renderProductList();
+                // Aqui você pode chamar renderProducts() do cardápio principal
+                if(window.renderProducts) window.renderProducts();
             };
             listContainer.appendChild(item);
         });

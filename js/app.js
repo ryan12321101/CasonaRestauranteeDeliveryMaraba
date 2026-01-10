@@ -231,21 +231,30 @@ function renderProducts() {
         const container = document.getElementById(category);
         if (!container) return;
 
-        container.innerHTML = menuData[category].map(product => `
-            <div class="product-card" onclick="openProductModal('${product.id}')">
-                <img src="${product.image}" class="product-image">
-                <div class="product-info">
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-description">${product.description}</div>
-                    <div class="product-footer">
-                        <span class="product-price">${formatPrice(product.price)}</span>
-                        <button class="btn-add" onclick="event.stopPropagation(); cart.addItem('${product.id}')">
-                            <i class="fas fa-plus"></i>
-                        </button>
+        const status = JSON.parse(localStorage.getItem('productStatus')) || {};
+
+        container.innerHTML = menuData[category].map(product => {
+            const isActive = status[product.id] !== false; // true ou undefined = ativo
+            return `
+                <div class="product-card" onclick="openProductModal('${product.id}')">
+                    <img src="${product.image}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-footer">
+                            <span class="product-price">
+                                ${isActive ? formatPrice(product.price) : 'ESGOTADO'}
+                            </span>
+                            <button class="btn-add" 
+                                onclick="event.stopPropagation(); cart.addItem('${product.id}')" 
+                                ${!isActive || !window.scheduleSystem.isOpenNow() ? 'disabled' : ''}>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     });
 }
 
@@ -253,33 +262,43 @@ function renderProducts() {
 function openProductModal(productId) {
     currentProduct = null;
 
+    // Procurar o produto
     Object.values(menuData).forEach(category => {
         category.forEach(product => {
-            if (product.id === productId) currentProduct = product;
+            if(product.id === productId) currentProduct = product;
         });
     });
 
-    if (!currentProduct) return;
+    if(!currentProduct) return;
 
     currentQty = 1;
 
-    // ===== IMAGENS =====
-    currentImages = currentProduct.images?.length
-        ? currentProduct.images
-        : [currentProduct.image, currentProduct.image];
-
-    currentImageIndex = 0;
+    // Verifica status
+    const status = JSON.parse(localStorage.getItem('productStatus')) || {};
+    const isActive = status[currentProduct.id] !== false; // true = ativo
 
     // ===== POPULA MODAL =====
-    document.getElementById('productModalImage').src = currentImages[0];
+    document.getElementById('productModalImage').src = currentProduct.image;
     document.getElementById('productModalTitle').textContent = currentProduct.name;
     document.getElementById('productModalDescription').textContent = currentProduct.description;
     document.getElementById('productModalPrice').textContent = formatPrice(currentProduct.price);
     document.getElementById('productModalQty').textContent = currentQty;
 
+    const addBtn = document.getElementById('productModalAdd');
+    if(!isActive){
+        addBtn.textContent = "Esgotado";
+        addBtn.disabled = true;
+        addBtn.style.backgroundColor = "#FF3D00";
+        addBtn.style.cursor = "not-allowed";
+    } else {
+        addBtn.textContent = "Adicionar";
+        addBtn.disabled = false;
+        addBtn.style.backgroundColor = "#E63946";
+        addBtn.style.cursor = "pointer";
+    }
+
     document.getElementById('productModal').classList.add('active');
 }
-
 // ================= CARROSSEL =================
 function initCarousel() {
     const prev = document.querySelector('.carousel-btn.prev');

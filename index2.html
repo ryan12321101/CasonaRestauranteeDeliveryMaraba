@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Secreto de Produtos</title>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f5f5f5;
+        color: #1a1a1a;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 0 16px;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #E63946;
+    }
+    .password-screen, .panel {
+        display: none;
+        background: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .password-screen.active, .panel.active {
+        display: block;
+    }
+    .password-screen input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        margin-bottom: 16px;
+        font-size: 16px;
+    }
+    .password-screen button {
+        width: 100%;
+        padding: 12px;
+        background: #E63946;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    .product-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f1f1f1;
+        padding: 12px 16px;
+        border-radius: 8px;
+    }
+    .product-item span {
+        font-weight: 600;
+    }
+    .product-item button {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+    .active-btn {
+        background: #2ECC71;
+        color: #fff;
+    }
+    .inactive-btn {
+        background: #FF3D00;
+        color: #fff;
+    }
+
+    /* Botão voltar do painel secreto */
+    #adminBackBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #E63946;
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        z-index: 10000;
+    }
+    #adminBackBtn:hover {
+        background-color: #C41E2A;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+</style>
+</head>
+<body>
+
+<!-- Botão de voltar -->
+<button id="adminBackBtn">🔙 Voltar</button>
+
+<div class="container">
+    <h1>Painel Secreto</h1>
+
+    <!-- Tela de senha -->
+    <div class="password-screen active" id="passwordScreen">
+        <input type="password" id="secretPassword" placeholder="Digite a senha">
+        <button id="enterPassword">Entrar</button>
+    </div>
+
+    <!-- Painel de produtos -->
+    <div class="panel" id="productPanel">
+        <div class="product-list" id="productList">
+            <!-- Produtos vão ser carregados aqui via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== Configurações =====
+    const PASSWORD = "1234"; // senha secreta
+    const products = [
+        {id: 'ou-01', name: 'Cozidão'},
+        {id: 'pe-07', name: 'Carne de Sol'},
+        {id: 'pm-02', name: 'Macarronada'},
+        {id: 'fj-01', name: 'Feijoada'},
+        {id: 'pe-03', name: 'Frango Grelhado'},
+        {id: 'pe-02', name: 'Bife Acebolado'}
+    ];
+
+    // ===== Funções =====
+    function loadProductStatus() {
+        return JSON.parse(localStorage.getItem('productStatus')) || {};
+    }
+
+    function saveProductStatus(status) {
+        localStorage.setItem('productStatus', JSON.stringify(status));
+    }
+
+    function renderProductList() {
+        const status = loadProductStatus();
+        const listContainer = document.getElementById('productList');
+        listContainer.innerHTML = '';
+        products.forEach(p => {
+            const isActive = status[p.id] !== false; // se undefined ou true => ativo
+            const item = document.createElement('div');
+            item.className = 'product-item';
+            item.innerHTML = `
+                <span>${p.name}</span>
+                <button class="${isActive ? 'active-btn' : 'inactive-btn'}">
+                    ${isActive ? 'Ativo' : 'Desativado'}
+                </button>
+            `;
+            const btn = item.querySelector('button');
+            btn.onclick = () => {
+                status[p.id] = !isActive;
+                saveProductStatus(status);
+                renderProductList();
+            };
+            listContainer.appendChild(item);
+        });
+    }
+
+    // ===== Login =====
+    document.getElementById('enterPassword').onclick = () => {
+        const input = document.getElementById('secretPassword').value;
+        if(input === PASSWORD){
+            document.getElementById('passwordScreen').classList.remove('active');
+            document.getElementById('productPanel').classList.add('active');
+            renderProductList();
+        } else {
+            alert('Senha incorreta!');
+        }
+    };
+
+    // ===== Botão Voltar =====
+    document.getElementById('adminBackBtn').onclick = () => {
+        window.location.href = 'index.html';
+    };
+</script>
+
+</body>
+</html>

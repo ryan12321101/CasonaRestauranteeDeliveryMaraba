@@ -156,6 +156,8 @@ body {
     transition: var(--transition);
 }
 
+modal
+
 .cart-button:hover {
     transform: scale(1.1);
     box-shadow: 0 12px 32px rgba(230, 57, 70, 0.4);
@@ -999,12 +1001,33 @@ body {
 
 
 .daily-banner {
-    background: linear-gradient(135deg, #ff7a18, #ff3d00);
+    position: relative;
+
+    background-image: url("../img/Sem\ título.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     color: #fff;
     padding: 16px;
     border-radius: 12px;
     margin: 16px;
     cursor: pointer;
+    overflow: hidden;
+}
+
+/* overlay escuro pra leitura */
+.daily-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* texto acima da imagem */
+.daily-banner > * {
+    position: relative;
+    z-index: 1;
 }
 
 .daily-banner-content h3 {
@@ -1087,3 +1110,5 @@ body {
     from { transform: scale(.9); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
+
+

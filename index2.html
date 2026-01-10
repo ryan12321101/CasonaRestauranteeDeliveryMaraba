@@ -83,8 +83,6 @@
         background: #FF3D00;
         color: #fff;
     }
-
-    /* Botão voltar */
     #adminBackBtn {
         position: fixed;
         top: 20px;
@@ -129,45 +127,27 @@
     </div>
 </div>
 
-<script>
+<script type="module">
+    // ===== Firebase =====
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getFirestore, collection, doc, getDocs, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDK8uHud9vukHhSwayfdcpaCN2AUR4-ySg",
+        authDomain: "painel-47b0e.firebaseapp.com",
+        projectId: "painel-47b0e",
+        storageBucket: "painel-47b0e.firebasestorage.app",
+        messagingSenderId: "732719130916",
+        appId: "1:732719130916:web:15b617ae946eb5a06dabb1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     // ===== Configurações =====
     const PASSWORD = "1234"; // senha secreta
 
-    // Lista completa de produtos (todos os produtos do cardápio)
-    const products = [
-    {id: 'pe-01', name: 'Bife a Cavalo'},
-    {id: 'pe-02', name: 'Bife Acebolado'},
-    {id: 'pe-03', name: 'Frango Grelhado'},
-    {id: 'pe-04', name: 'Chapa Mista'},
-    {id: 'pe-05', name: 'Picanha Grelhada'},
-    {id: 'pe-06', name: 'Filé Mignon Grelhado'},
-    {id: 'pe-07', name: 'Bisteca Suína'},
-    {id: 'pe-08', name: 'Peixe Grelhado'},
-    
-    {id: 'es-01', name: 'Estrogonofe de Frango'},
-    {id: 'es-02', name: 'Estrogonofe de Filé Mignon'},
-    
-    {id: 'pm-01', name: 'Parmegiana de Carne'},
-    {id: 'pm-02', name: 'Parmegiana de Frango'},
-    
-    {id: 'ou-01', name: 'Almôndegas de Carne Recheada'},
-    
-    {id: 'pn-01', name: 'Panelinha de Frango'},
-    {id: 'pn-02', name: 'Panelinha de Filé Mignon'},
-    {id: 'pn-03', name: 'Panelinha de Camarão'},
-    
-    {id: 'fj-01', name: 'Kit Feijoada (1 pessoa)'},
-    {id: 'fj-02', name: 'Kit Feijoada (2 pessoas)'},
-    
-    {id: 'bb-01', name: 'Coca-Cola Lata'},
-    {id: 'bb-02', name: 'Coca-Cola 600ml'},
-    {id: 'bb-03', name: 'Coca-Cola 1L'},
-    {id: 'bb-04', name: 'Coca-Cola 2L'},
-    {id: 'bb-05', name: 'Suco Del Valle (Laranja)'},
-    {id: 'bb-06', name: 'Suco Del Valle (Uva)'}
-];
-
-    // ===== Funções =====
+    // ===== Funções para status local =====
     function loadProductStatus() {
         return JSON.parse(localStorage.getItem('productStatus')) || {};
     }
@@ -176,13 +156,46 @@
         localStorage.setItem('productStatus', JSON.stringify(status));
     }
 
-    function renderProductList() {
-        const status = loadProductStatus();
+    // ===== Lista completa de produtos (ID + Nome) =====
+    const products = [
+        {id: 'pe-01', name: 'Bife a Cavalo'},
+        {id: 'pe-02', name: 'Bife Acebolado'},
+        {id: 'pe-03', name: 'Frango Grelhado'},
+        {id: 'pe-04', name: 'Chapa Mista'},
+        {id: 'pe-05', name: 'Picanha Grelhada'},
+        {id: 'pe-06', name: 'Filé Mignon Grelhado'},
+        {id: 'pe-07', name: 'Bisteca Suína'},
+        {id: 'pe-08', name: 'Peixe Grelhado'},
+        {id: 'es-01', name: 'Estrogonofe de Frango'},
+        {id: 'es-02', name: 'Estrogonofe de Filé Mignon'},
+        {id: 'pm-01', name: 'Parmegiana de Carne'},
+        {id: 'pm-02', name: 'Parmegiana de Frango'},
+        {id: 'ou-01', name: 'Almôndegas de Carne Recheada'},
+        {id: 'pn-01', name: 'Panelinha de Frango'},
+        {id: 'pn-02', name: 'Panelinha de Filé Mignon'},
+        {id: 'pn-03', name: 'Panelinha de Camarão'},
+        {id: 'fj-01', name: 'Kit Feijoada (1 pessoa)'},
+        {id: 'fj-02', name: 'Kit Feijoada (2 pessoas)'},
+        {id: 'bb-01', name: 'Coca-Cola Lata'},
+        {id: 'bb-02', name: 'Coca-Cola 600ml'},
+        {id: 'bb-03', name: 'Coca-Cola 1L'},
+        {id: 'bb-04', name: 'Coca-Cola 2L'},
+        {id: 'bb-05', name: 'Suco Del Valle (Laranja)'},
+        {id: 'bb-06', name: 'Suco Del Valle (Uva)'}
+    ];
+
+    // ===== Render do Painel Secreto =====
+    async function renderProductList() {
+        const statusLocal = loadProductStatus();
         const listContainer = document.getElementById('productList');
         listContainer.innerHTML = '';
 
-        products.forEach(p => {
-            const isActive = status[p.id] !== false;
+        // Busca produtos do Firebase
+        const snapshot = await getDocs(collection(db, "products"));
+        snapshot.forEach(docSnap => {
+            const p = { id: docSnap.id, ...docSnap.data() };
+            const isActive = p.active !== false;
+
             const item = document.createElement('div');
             item.className = 'product-item';
             item.innerHTML = `
@@ -191,17 +204,30 @@
                     ${isActive ? 'Ativo' : 'Esgotado'}
                 </button>
             `;
+
             const btn = item.querySelector('button');
-            btn.onclick = () => {
-                status[p.id] = !isActive;
-                saveProductStatus(status);
-                renderProductList();
-                // Aqui você pode chamar renderProducts() do cardápio principal
-                if(window.renderProducts) window.renderProducts();
+            btn.onclick = async () => {
+                // Atualiza no Firebase
+                await toggleProductStatus(p.id, isActive);
+
+                // Atualiza local
+                statusLocal[p.id] = !isActive;
+                saveProductStatus(statusLocal);
             };
+
             listContainer.appendChild(item);
         });
     }
+
+    async function toggleProductStatus(productId, currentStatus) {
+        const productRef = doc(db, "products", productId);
+        await updateDoc(productRef, { active: !currentStatus });
+    }
+
+    // ===== Atualização em tempo real =====
+    onSnapshot(collection(db, "products"), snapshot => {
+        renderProductList(); // atualiza sempre que houver mudança
+    });
 
     // ===== Login =====
     document.getElementById('enterPassword').onclick = () => {

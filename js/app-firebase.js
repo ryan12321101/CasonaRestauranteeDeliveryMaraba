@@ -6,6 +6,10 @@
 // ========================================
 
 // Variável para armazenar produtos ativos do Firebase
+
+
+
+
 let produtosAtivosFirebase = new Set();
 let firebaseCarregado = false;
 

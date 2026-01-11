@@ -356,7 +356,8 @@ function initDailyBanner() {
         3: { id: 'pm-02', title: 'Macarronada', promo: 'Macarronada feita na hora 🍝' },
         4: { id: 'fj-01', title: 'Feijoada', promo: 'Quinta é dia de feijoada!' },
         5: { id: 'pe-03', title: 'Frango Grelhado', promo: 'Promoção especial de sexta!' },
-        6: { id: 'pe-02', title: 'Dia da Fejoada', promo: 'Sábado com bife acebolado 😋' }
+        6: { id: 'pe-02', title: 'Dia da Fejoada', promo: 'Sábado com bife acebolado 😋' },
+        0: { id: 'pe-02', title: 'Dia da Fejoada', promo: 'Sábado com bife acebolado 😋' }
     };
 
     const dailyBannerImages = {
@@ -398,7 +399,8 @@ function initDailyModal() {
         3: { id: 'pm-02', title: 'Macarronada', promo: 'Macarronada fresquinha 🍝' },
         4: { id: 'fj-01', title: 'Feijoada', promo: 'Quinta é dia de feijoada!' },
         5: { id: 'pe-03', title: 'Frango Grelhado', promo: 'Promoção especial de sexta!' },
-        6: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado especial 😋' }
+        6: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado especial 😋' },
+        0: { id: 'pe-02', title: 'Bife Acebolado', promo: 'Sábado especial 😋' }
     };
 
     const today = dailyMenu[day];

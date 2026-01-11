@@ -8,7 +8,7 @@ const businessHours = {
     4: { open: '09:00', close: '18:00', isOpen: true },  // Quinta
     5: { open: '09:00', close: '18:00', isOpen: true },  // Sexta
     6: { open: '09:00', close: '23:00', isOpen: true },       // Sábado (Fechado)
-    0: { open: null, close: null, isOpen: false }        // Domingo (Fechado)
+    0: { open: '09:00', close: '23:00', isOpen: true },        // Domingo (Fechado)
 };
 
 // Função para converter horário em minutos

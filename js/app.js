@@ -433,16 +433,3 @@ function initDailyModal() {
 
 
 
-// Banner Carousel automático
-let carouselIndex = 0;
-const carouselItems = document.querySelectorAll('.carousel-item');
-
-function showCarouselItem(index) {
-    carouselItems.forEach(item => item.classList.remove('active'));
-    carouselItems[index].classList.add('active');
-}
-
-setInterval(() => {
-    carouselIndex = (carouselIndex + 1) % carouselItems.length;
-    showCarouselItem(carouselIndex);
-}, 4000); // troca a cada 4 segundos

@@ -145,7 +145,21 @@ const menuData = {
             name: 'Estrogonofe de Filé Mignon',
             description: 'Filé mignon em molho cremoso com champignon',
             price: 25.00,
-            image: 'https://images.unsplash.com/photo-1612760698919-ea060e0b4cf0?w=400&h=300&fit=crop',
+            image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400&h=300&fit=crop',
+
+            images: [
+        'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop'
+    ],
+
+    category: 'estrogonofes'
+        },
+        {
+            id: 'es-03',
+            name: 'Estrogonofe de Filé Mignon',
+            description: 'Filé mignon em molho cremoso com champignon',
+            price: 25.00,
+            image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
 
             images: [
         'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&h=300&fit=crop',

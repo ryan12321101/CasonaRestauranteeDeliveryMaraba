@@ -66,8 +66,7 @@ console.log('✅ Firebase inicializado com sucesso!');
 // Função para popular o Firestore com os dados iniciais do menuData
 // Execute esta função UMA VEZ no console do navegador após configurar o Firebase
 // para criar todos os produtos no Firestore
-
-
+// 🔹 Configuração do Firebase (PRIMEIRO)
 const firebaseConfig = {
   apiKey: "AIzaSyDK8uHud9vukHhSwayfdcpaCN2AUR4-ySg",
   authDomain: "painel-47b0e.firebaseapp.com",
@@ -77,46 +76,56 @@ const firebaseConfig = {
   appId: "1:732719130916:web:15b617ae946eb5a06dabb1"
 };
 
-async function popularFirestoreInicial() {
-    if (typeof db === 'undefined') {
-        console.error('❌ Firebase não está configurado. Configure o firebase.js primeiro.');
-        return;
-    }
-    
-    console.log('📦 Iniciando população do Firestore...');
-    
-    try {
-        // Pegar todos os produtos do menuData
-        const todasCategorias = Object.keys(menuData);
-        let totalProdutos = 0;
-        
-        for (const categoria of todasCategorias) {
-            const produtos = menuData[categoria];
-            
-            for (const produto of produtos) {
-                // Criar documento no Firestore
-                await db.collection('produtos').doc(produto.id).set({
-                    nome: produto.name,
-                    preco: produto.price,
-                    ativo: true, // Todos começam ativos
-                    category: produto.category,
-                    description: produto.description || '',
-                    image: produto.image || '',
-                    images: produto.images || []
-                });
-                
-                totalProdutos++;
-                console.log(`✓ Produto ${produto.id} adicionado`);
-            }
-        }
-        
-        console.log(`✅ População concluída! ${totalProdutos} produtos adicionados.`);
-        
-    } catch (error) {
-        console.error('❌ Erro ao popular Firestore:', error);
-    }
-}
+// 🔹 Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
 
+// 🔹 Firestore GLOBAL
+window.db = firebase.firestore();
+
+console.log('✅ Firebase inicializado com sucesso!');
+
+// 🔹 Função GLOBAL para rodar no console
+window.popularFirestoreInicial = async function () {
+
+  if (!window.db) {
+    console.error('❌ Firestore não inicializado');
+    return;
+  }
+
+  console.log('📦 Iniciando população do Firestore...');
+
+  try {
+    const todasCategorias = Object.keys(menuData);
+    let totalProdutos = 0;
+
+    for (const categoria of todasCategorias) {
+      const produtos = menuData[categoria];
+
+      for (const produto of produtos) {
+        await window.db
+          .collection('produtos')
+          .doc(produto.id)
+          .set({
+            nome: produto.name,
+            preco: produto.price,
+            ativo: true,
+            category: produto.category,
+            description: produto.description || '',
+            image: produto.image || '',
+            images: produto.images || []
+          });
+
+        totalProdutos++;
+        console.log(`✓ Produto ${produto.id} adicionado`);
+      }
+    }
+
+    console.log(`✅ População concluída! ${totalProdutos} produtos adicionados`);
+
+  } catch (error) {
+    console.error('❌ Erro ao popular Firestore:', error);
+  }
+};
 // ===== REGRAS DO FIRESTORE (COPIE E COLE NO CONSOLE DO FIREBASE) =====
 /*
 rules_version = '2';
